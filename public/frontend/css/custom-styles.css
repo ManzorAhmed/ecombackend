@@ -1,0 +1,177 @@
+
+
+h1{
+    color: rgb(42, 92, 255);
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 24px; font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+h2{
+    color: rgb(42, 92, 255);
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 24px; font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+.page-column {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.content-title {
+    color: rgb(42, 92, 255);
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 24px; font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+
+p, .content-text-2 {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 20px; font-style: normal;
+    font-variant: normal;
+    line-height: 26.4px;
+}
+
+
+.column-container-2 {
+    width: 100%;
+    padding: 5px;
+    background-color: #ffffff;
+    display: flex;
+    z-index: 1;
+    margin-top: 10px;
+    padding-right: 15px;
+    text-align: justify;
+    justify-content: center;
+}
+
+.content-detail {
+    display: flex;
+    text-align: justify;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: rgb(42, 92, 255);
+    margin: 20px 0;
+}
+
+.signature {
+    margin: 30px;
+}
+
+.sign {
+    max-width: 5%;
+    height: auto;
+    position: relative;
+    top: 1px;
+    left: -8px;
+}
+
+.btn-reg{
+    background-color: #ff0202;
+    color: white;
+    padding: 20px 50px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.content-description-red{
+    color: #ff0202;
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 12px; font-style: normal;
+    font-variant: normal;
+    line-height: 26.4px;
+}
+
+.content-members{
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 18px; font-style: normal;
+    font-variant: normal;
+    line-height: 26.4px;
+}
+
+.content-purple{
+    color: #6b00a8;
+    text-align: center;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 18px; font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+.societies, .layout{
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 5px;
+    margin: 2px;
+    text-align: center;
+}
+
+/* Media Queries for Responsive Design */
+@media only screen and (max-width: 768px) {
+    /* Adjust font sizes and other styles for smaller screens */
+    h1, h2 {
+        font-size: 20px;
+        line-height: 22px;
+    }
+
+    .content-description {
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    .content-text-2, .content-description-red, .content-members, .content-purple {
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    .sign {
+        max-width: 10%;
+    }
+
+    .row {
+        flex-direction: column; /* Change the flex-direction to stack columns */
+    }
+
+    .column {
+        width: 100%; /* Set the width of columns to 100% to occupy the full width */
+        margin-bottom: 10px; /* Add some space between stacked columns */
+    }
+}
+
+/* Adjust the column width and other styles as needed */
+
