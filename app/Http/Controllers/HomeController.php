@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActiveAbudhabi;
+use App\Models\Contact;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -67,6 +68,42 @@ class HomeController extends Controller
         Session::flash('success_message', 'Great! Team Member Added to the List Successfully');
         return redirect()->back();
     }
+    public function Contact_Us()
+    {
+        return view('frontend.partials.contact');
+    }
+    public function StoreContact(Request $request)
+    {
 
+        $this->validate($request,[
+        'first_name' => 'required|max:256',
+        'last_name' => 'required|max:256',
+        'email' => 'required|max:256',
+        'team_name' => 'required|max:256',
+        ]);
+        $contact = new Contact();
+        $contact->first_name = $request->input('first_name');
+        $contact->last_name = $request->input('last_name');
+        $contact->email = $request->input('email');
+        $contact->team_name = $request->input('team_name');
+
+        if($request->active)
+        {
+            $contact->active = 1;
+        }else
+        {
+            $contact->active = 0;
+        }
+        $contact->save();
+        // Save related participants
+        $participants = $request->input('participant_name', []);
+        foreach ($participants as $participantName) {
+            $participant = new Participant();
+            $participant->name = $participantName;
+            $contact->participants()->save($participant);
+        }
+        Session::flash('success_message', 'Great! Contact Added to the List Successfully');
+        return redirect()->back();
+    }
 
 }

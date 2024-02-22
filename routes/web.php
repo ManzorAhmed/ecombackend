@@ -63,6 +63,9 @@ Route::post('/store-active-abu-dhabi', [HomeController::class, 'storeActiveAbuDh
 //Route::get('/sponsor', [HomeController::class, 'Sponsor'])->name('sponsor');
 //Route::get('/agenda', [HomeController::class, 'agenda'])->name('agenda');
 
+Route::get('contact',[HomeController::class,'Contact_Us'])->name('contact');
+Route::post('store-contact',[HomeController::class,'StoreContact'])->name('store-contact');
+
 
 Auth::routes();
 

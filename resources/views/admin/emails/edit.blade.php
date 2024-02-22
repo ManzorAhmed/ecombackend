@@ -165,15 +165,9 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 200,
-                tabsize: 2,
-                codemirror: {
-                    mode: 'text/html',
-                    htmlMode: true,
-                    lineNumbers: true,
-                    theme: 'monokai'
-                }
+            $('#recipient-emails').select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
             });
         });
     </script>

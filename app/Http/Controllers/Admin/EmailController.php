@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmailStoreRequest;
+use App\Http\Requests\EmailUpdateRequest;
 use App\Models\Email;
 use App\Models\Recipient;
+use App\Service\EmailCreateService;
+use App\Service\EmailService;
+use App\Service\EmailUpdateService;
 use Illuminate\Http\Request;
 use App\Service\EmailServiceInterface;
 use Illuminate\Support\Facades\Session;
@@ -13,10 +18,12 @@ use Illuminate\Support\Facades\Session;
 class EmailController extends Controller
 {
     protected $emailService;
+    protected $emailCreateService;
 
-    public function __construct(EmailServiceInterface $emailService)
+    public function __construct(EmailService $emailService, EmailCreateService $emailCreateService)
     {
         $this->emailService = $emailService;
+        $this->emailCreateService = $emailCreateService;
     }
     public function index()
     {
@@ -27,34 +34,18 @@ class EmailController extends Controller
     {
         return view('admin.emails.create',['title'=>'Email Create']);
     }
-    public function store(Request $request)
+    public function store(EmailStoreRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'template_key' => 'required|unique:emails',
-            'subject' => 'required',
-            'email_content' => 'required',
+        // Validate request
+        $validatedData = $request->validated();
 
-        ]);
+        // Create email using EmailCreateService
+        $emailTemplate = $this->emailCreateService->createEmail($validatedData);
 
-        $emailTemplate = new Email();
-        $emailTemplate->title = $request->input('title');
-        $emailTemplate->template_key = $request->input('template_key');
-        $emailTemplate->subject = $request->input('subject');
-        $emailTemplate->email_content = $request->input('email_content');
-        $emailTemplate->active = $request->has('active') ? 1 : 0;
-        $emailTemplate->save();
-
-        // Store recipient email addresses
-        $recipientEmails = explode(',', $request->input('recipient_emails'));
-        foreach ($recipientEmails as $recipientEmail) {
-            $recipient = new Recipient();
-            $recipient->email = trim($recipientEmail);
-            $emailTemplate->recipients()->save($recipient);
-        }
         // Send the email
         $recipientEmails = explode(',', $request->input('recipient_emails'));
         $this->emailService->sendEmail($emailTemplate->title, $emailTemplate->template_key, $recipientEmails, $emailTemplate->subject, $emailTemplate->email_content);
+
         // Flash success message
         Session::flash('success_message', 'Great! Email template has been added successfully.');
 
@@ -83,36 +74,18 @@ class EmailController extends Controller
         return view('admin.emails.edit',['Title'=>'Edit Email Template','template'=>$template,'recipientEmails'=>$recipientEmails]);
 
     }
-    public function update(Request $request, $id)
+    public function update(EmailUpdateRequest $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'template_key' => 'required|unique:emails',
-            'subject' => 'required',
-            'email_content' => 'required',
+        // Validate request
+        $validatedData = $request->validated();
 
-        ]);
-
+        // Find the Email Template by ID
         $emailTemplate = Email::findOrFail($id);
-        $emailTemplate->title = $request->input('title');
-        $emailTemplate->template_key = $request->input('template_key');
-        $emailTemplate->subject = $request->input('subject');
-        $emailTemplate->email_content = $request->input('email_content');
-        $emailTemplate->active = $request->has('active') ? 1 : 0;
-        $emailTemplate->save();
 
-        // Store recipient email addresses
-        $recipientEmails = explode(',', $request->input('recipient_emails'));
-        foreach ($recipientEmails as $recipientEmail) {
-            $recipient = new Recipient();
-            $recipient->email = trim($recipientEmail);
-            $emailTemplate->recipients()->save($recipient);
-        }
-        // Send the email
-        $recipientEmails = explode(',', $request->input('recipient_emails'));
-        $this->emailService->sendEmail($emailTemplate->title, $emailTemplate->template_key, $recipientEmails, $emailTemplate->subject, $emailTemplate->email_content);
-        // Flash success message
-        Session::flash('success_message', 'Great! Email template has been added successfully.');
+        // Update email template with validated data
+        $emailTemplate->update($validatedData);
+
+        Session::flash('success_message', 'Great! Email template has been Updated successfully.');
 
         return redirect()->back();
 

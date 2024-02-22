@@ -16,8 +16,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
-//    public function getProductNameAttributes($value)
-//    {
-//        return $this->attributes['name'] = $value;
-//    }
+    public function getProductNameAttributes($value)
+    {
+        return $this->attributes['name'] = $value;
+    }
 }
