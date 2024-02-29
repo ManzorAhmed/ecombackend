@@ -238,7 +238,7 @@
 </div>
 <div class="container">
     <div class="header">
-        <h2 class="">Active Abu Dhabi Member</h2>
+        <h2 style="text-align: center">Active Abu Dhabi Form </h2>
         <div id="notification" class="notification">
             @if(session('success_message'))
                 <div class="alert alert-success">

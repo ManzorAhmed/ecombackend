@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // ... other commands
         \App\Console\Commands\SyncWordPressData::class,
+        \App\Console\Commands\MakeContract::class,
+
     ];
 
     /**

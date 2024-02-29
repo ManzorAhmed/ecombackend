@@ -255,6 +255,17 @@
                         </a>
                     @endif
                 </li>
+                <li class="nav-item">
+                    @if(shouldDisplayLink('role-admin', 'permission-admin'))
+                        <a href="{{ route('payment_gateway.index') }}"
+                           class="nav-link {{ request()->is('admin/email') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-envelope"></i>
+                            <p>
+                                Manage Payment Gateway
+                            </p>
+                        </a>
+                    @endif
+                </li>
 
 {{--                <li class="nav-item">--}}
 {{--                    @if(shouldDisplayLink('role-admin', 'permission-admin'))--}}

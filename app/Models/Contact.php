@@ -11,5 +11,7 @@ class Contact extends Model
     {
         return $this->hasMany(Participant::class);
     }
-
+ public function getEmailAttribute($value){
+        return 'Mr '.$value;
+ }
 }

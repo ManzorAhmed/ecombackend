@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AgendaController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmailController;
+use App\Http\Controllers\Admin\PaymentGatewayController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ManualGatewayController;
 use App\Http\Controllers\Admin\NavbarController;
@@ -194,6 +195,13 @@ Route::group([
             Route::resource('email',EmailController::class,);
             Route::Post('get-email',[EmailController::class,'getEmail'])->name('admin.Email');
             Route::get('email/send/{id}', [EmailController::class, 'send'])->name('email.send');
+
+
+            //Payment Gateway controller
+
+            Route::resource('payment_gateway',PaymentGatewayController::class);
+//            Route::get('payment_gateway',PaymentGatewayController::class,);
+            Route::Post('get-payment_gateway',[PaymentGatewayController::class,'getPaymentGateway'])->name('admin.PaymentGateway');
 
 
 
