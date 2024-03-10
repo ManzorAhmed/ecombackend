@@ -58,8 +58,9 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @can('create', App\Models\User::class)
-                            <li class="nav-item">
+
+                        <li class="nav-item">
+                            @if(shouldDisplayLink('role-admin', 'permission-admin'))
                                 <a href="{{ route('users.index') }}"
                                    class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-user-alt"></i>
@@ -67,58 +68,58 @@
                                         Users
                                     </p>
                                 </a>
-                                @endcan
-                            </li>
-                            <li class="nav-item">
-                                @if(shouldDisplayLink('role-admin', 'permission-admin'))
-                                    <a href="{{ route('users.create') }}"
-                                       class="nav-link {{ request()->is('admin/users/create') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-user-alt"></i>
-                                        <p>
-                                            Add User
-                                        </p>
-                                    </a>
-                                @endif
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('user.profile') }}"
-                                   class="nav-link {{ request()->is('admin/profile-setting') ? 'active' : '' }}">
+                            @endif
+                        </li>
+                        <li class="nav-item">
+                            @if(shouldDisplayLink('role-admin', 'permission-admin'))
+                                <a href="{{ route('users.create') }}"
+                                   class="nav-link {{ request()->is('admin/users/create') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-user-alt"></i>
                                     <p>
-                                        Update Profile
+                                        Add User
                                     </p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                @php
-                                    $user = auth()->user();
-                                    $isAdmin = $user->hasRole('role-admin');
-                                    $hasAdminPermission = $user->hasPermission('permission-admin');
-                                @endphp
+                            @endif
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.profile') }}"
+                               class="nav-link {{ request()->is('admin/profile-setting') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-alt"></i>
+                                <p>
+                                    Update Profile
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @php
+                                $user = auth()->user();
+                                $isAdmin = $user->hasRole('role-admin');
+                                $hasAdminPermission = $user->hasPermission('permission-admin');
+                            @endphp
 
-                                 Debugging Output
-                                                                <p>User Roles: {{ $user->roles->pluck('name')->implode(', ') }}</p>
-                                                                <p>User Permissions: {{ $user->permissions->pluck('name')->implode(', ') }}</p>
-                                                                <p>Is Admin Role: {{ $isAdmin ? 'Yes' : 'No' }}</p>
-                                                                <p>Has Admin Permission: {{ $hasAdminPermission ? 'Yes' : 'No' }}</p>
+                            Debugging Output
+                            <p>User Roles: {{ $user->roles->pluck('name')->implode(', ') }}</p>
+                            <p>User Permissions: {{ $user->permissions->pluck('name')->implode(', ') }}</p>
+                            <p>Is Admin Role: {{ $isAdmin ? 'Yes' : 'No' }}</p>
+                            <p>Has Admin Permission: {{ $hasAdminPermission ? 'Yes' : 'No' }}</p>
 
-                                {{-- Display Link Based on Role and Permission --}}
-                                @if($isAdmin)
-                                    <a href="{{ route('roles.index') }}"
-                                       class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-user-tag"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                @endif
+                             Display Link Based on Role and Permission
+                            @if($isAdmin)
+                                <a href="{{ route('roles.index') }}"
+                                   class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-user-tag"></i>
+                                    <p>Roles</p>
+                                </a>
+                            @endif
 
-                                @if($hasAdminPermission)
-                                    <a href="{{ route('permissions.index') }}"
-                                       class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-key"></i>
-                                        <p>Permissions</p>
-                                    </a>
-                                @endif
-                            </li>
+                            @if($hasAdminPermission)
+                                <a href="{{ route('permissions.index') }}"
+                                   class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-key"></i>
+                                    <p>Permissions</p>
+                                </a>
+                            @endif
+                        </li>
 
                     </ul>
                 </li>
@@ -189,28 +190,28 @@
                         </a>
                     @endif
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    @can('create')--}}
-{{--                        <a href="{{ route('agenda.index') }}" class="nav-link {{ request()->is('admin/agenda') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fa fa-address-book"></i>--}}
-{{--                            <p>--}}
-{{--                                Manage Agenda--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    @endcan--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    @can('create')--}}
+                {{--                        <a href="{{ route('agenda.index') }}" class="nav-link {{ request()->is('admin/agenda') ? 'active' : '' }}">--}}
+                {{--                            <i class="nav-icon fa fa-address-book"></i>--}}
+                {{--                            <p>--}}
+                {{--                                Manage Agenda--}}
+                {{--                            </p>--}}
+                {{--                        </a>--}}
+                {{--                    @endcan--}}
+                {{--                </li>--}}
 
-{{--                <li class="nav-item">--}}
-{{--                    @if(shouldDisplayLink('role-admin', 'permission-admin'))--}}
-{{--                        <a href="{{ route('navbar.index') }}"--}}
-{{--                           class="nav-link {{ request()->is('admin/navbar') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fa fa-hamburger"></i>--}}
-{{--                            <p>--}}
-{{--                                Manage Navbar/Header--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    @endif--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    @if(shouldDisplayLink('role-admin', 'permission-admin'))--}}
+                {{--                        <a href="{{ route('navbar.index') }}"--}}
+                {{--                           class="nav-link {{ request()->is('admin/navbar') ? 'active' : '' }}">--}}
+                {{--                            <i class="nav-icon fa fa-hamburger"></i>--}}
+                {{--                            <p>--}}
+                {{--                                Manage Navbar/Header--}}
+                {{--                            </p>--}}
+                {{--                        </a>--}}
+                {{--                    @endif--}}
+                {{--                </li>--}}
                 <li class="nav-item">
                     @if(shouldDisplayLink('role-admin', 'permission-admin'))
                         <a href="{{ route('active_abu_dhabi.index') }}"
@@ -246,6 +247,28 @@
                 </li>
                 <li class="nav-item">
                     @if(shouldDisplayLink('role-admin', 'permission-admin'))
+                        <a href="{{ route('blog.index') }}"
+                           class="nav-link {{ request()->is('admin/blog') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-cart-plus"></i>
+                            <p>
+                                Manage Blog
+                            </p>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(shouldDisplayLink('role-admin', 'permission-admin'))
+                        <a href="{{ route('csv.index') }}"
+                           class="nav-link {{ request()->is('admin/csv') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-file-alt"></i>
+                            <p>
+                                Manage CSV
+                            </p>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if(shouldDisplayLink('role-admin', 'permission-admin'))
                         <a href="{{ route('email.index') }}"
                            class="nav-link {{ request()->is('admin/email') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-envelope"></i>
@@ -259,25 +282,25 @@
                     @if(shouldDisplayLink('role-admin', 'permission-admin'))
                         <a href="{{ route('payment_gateway.index') }}"
                            class="nav-link {{ request()->is('admin/email') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-envelope"></i>
+                            <i class="nav-icon fa-cc-amazon-pay"></i>
                             <p>
-                                Manage Payment Gateway
+                                Payment Gateway
                             </p>
                         </a>
                     @endif
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    @if(shouldDisplayLink('role-admin', 'permission-admin'))--}}
-{{--                        <a href="{{ route('gateway.index') }}"--}}
-{{--                           class="nav-link {{ request()->is('admin/gateway') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fa fa-credit-card"></i>--}}
-{{--                            <p>--}}
-{{--                                Manage Gateway Manual--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    @endif--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    @if(shouldDisplayLink('role-admin', 'permission-admin'))--}}
+                {{--                        <a href="{{ route('gateway.index') }}"--}}
+                {{--                           class="nav-link {{ request()->is('admin/gateway') ? 'active' : '' }}">--}}
+                {{--                            <i class="nav-icon fa fa-credit-card"></i>--}}
+                {{--                            <p>--}}
+                {{--                                Manage Gateway Manual--}}
+                {{--                            </p>--}}
+                {{--                        </a>--}}
+                {{--                    @endif--}}
+                {{--                </li>--}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-list-alt"></i>

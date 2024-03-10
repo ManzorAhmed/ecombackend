@@ -8,9 +8,12 @@ use App\Models\Contact;
 use App\Models\Email;
 use App\Models\Participant;
 use App\Service\EmailService;
+use App\Services\GoogleSheetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+
 
 class HomeController extends Controller
 {
@@ -80,7 +83,7 @@ class HomeController extends Controller
         Session::flash('success_message', 'Great! Team Member Added to the List Successfully');
         return redirect()->back();
     }
-    public function Contact_Us()
+    public function Contact()
     {
         return view('frontend.partials.contact');
     }
@@ -106,7 +109,7 @@ class HomeController extends Controller
         $contact->save();
 
         // Retrieve the email template from the database (assuming you have a specific template ID)
-        $templateId = 7; // Replace this with the actual template ID you want to use
+        $templateId = 3; // Replace this with the actual template ID you want to use
         $emailTemplate = Email::findOrFail($templateId);
 
         // Populate the email template with dynamic data from the contact form
@@ -122,8 +125,22 @@ class HomeController extends Controller
         // Flash success message
         Session::flash('success_message', 'Thank you for contacting us. A confirmation email has been sent to your email address.');
 
-        // Redirect back to the previous page
         return redirect()->back();
+    }
+
+    public function fetchData()
+    {
+        // Fetch data from Google Sheets
+        $csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-bGYQaqWKMEj0n9nYJWKvWj2XSPrPbmL7Uxe9JiiI4m16FjouU_TVYUTjS_QketJraWHTMg-ljiDQ/pub?gid=0&single=true&output=csv';
+        $csvData = file_get_contents($csvUrl);
+        $rows = explode("\n", $csvData);
+        $data = [];
+        foreach ($rows as $row) {
+            $data[] = str_getcsv($row);
+        }
+
+        // Return the view with fetched data
+        return view('frontend.partials.fetch-data', compact('data'));
     }
 
 

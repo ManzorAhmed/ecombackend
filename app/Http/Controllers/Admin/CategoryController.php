@@ -3,28 +3,36 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function index()
     {
-        $category = Category::all();
-        return view('admin.categories.index', ['title' => 'Registered Category', 'category' => $category]);
+        $title = 'Registered Category'; // Set the title
+        $categories = $this->categoryRepository->all($title);
+        return $categories;
+        // return view('admin.categories.index', compact('title', 'categories'));
     }
 
     public function create()
     {
-        return view('admin.categories.create', ['title' => 'create Category']);
+        $title = 'Create Category'; // Set the title
+        return $this->categoryRepository->create($title);
     }
 
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:categories,name|max:15',
-        ]);
+        $validatedData = $request->validated();
         $category = new Category();
         $category->name = $request->input('name');
         if ($request->active){

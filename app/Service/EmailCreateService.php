@@ -5,9 +5,11 @@ namespace App\Service;
 use App\Models\Email;
 use App\Models\Recipient;
 use Illuminate\Support\Facades\DB;
+use Html2Text\Html2Text;
 
 class EmailCreateService
 {
+
     public function createEmail(array $data): ?Email
     {
         // Check if all required fields are present
@@ -25,7 +27,13 @@ class EmailCreateService
             $emailTemplate->title = $data['title'];
             $emailTemplate->template_key = $data['template_key'];
             $emailTemplate->subject = $data['subject'];
-            $emailTemplate->email_content = $data['email_content'];
+
+            // Convert HTML to plain text and replace &nbsp; with spaces
+            $plainTextContent = str_replace('&nbsp;', ' ', strip_tags($data['email_content']));
+
+            // Store the modified plain text content
+            $emailTemplate->email_content = $plainTextContent;
+
             $emailTemplate->active = isset($data['active']) ? 1 : 0;
             $emailTemplate->save();
 
@@ -48,4 +56,7 @@ class EmailCreateService
             return null;
         }
     }
+
+
+
 }

@@ -30,8 +30,6 @@ class DynamicRolePermissionMiddleware
             // Apply the role_or_permission middleware dynamically
             $request->route()->middleware(['dynamic_role_permission:' . implode(',', $rolesOrPermissions)]);
         }
-
-
         return $next($request);
     }
 

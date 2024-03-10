@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="form-group float-right">
-                                @can('create', App\Models\User::class)
+{{--                                @can('create', App\Models\User::class)--}}
                                     <a href="{{ route('users.create') }}" class="btn btn-primary">
                                         <i class="fa fw fa-plus"></i>
                                         Add User
@@ -37,7 +37,7 @@
                                     <a class="btn btn-danger" onclick="del_selected()" href="javascript:void(0)">
                                         <i class="fa fa-trash"></i> Delete All
                                     </a>
-                                @endcan
+{{--                                @endcan--}}
                             </div>
                             <h4 class="float-left">Users List</h4>
                         </div>

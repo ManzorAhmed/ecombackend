@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\ActiveAbuDhabiController;
 use App\Http\Controllers\Admin\AgendaController;
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CsvController;
 use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\PaymentGatewayController;
 use App\Http\Controllers\Admin\ProductController;
@@ -53,8 +55,8 @@ Route::get('/', function () {
 });
 
 //Route::get('/', [HomeController::class, 'newHome'])->name('home');
-Route::get('/active-abu-dhabi', [HomeController::class, 'activeAbuDhabi'])->name('active-abu-dhabi');
-Route::post('/store-active-abu-dhabi', [HomeController::class, 'storeActiveAbuDhabi'])->name('store-active-abu-dhabi');
+Route::get('contact', [HomeController::class, 'Contact'])->name('contact');
+Route::post('store-contact', [HomeController::class, 'storeContact'])->name('store-contact');
 
 
 //Route::get('/iiwcc_course', [HomeController::class, 'iiwccCourse'])->name('iiwcc_course');
@@ -64,8 +66,12 @@ Route::post('/store-active-abu-dhabi', [HomeController::class, 'storeActiveAbuDh
 //Route::get('/sponsor', [HomeController::class, 'Sponsor'])->name('sponsor');
 //Route::get('/agenda', [HomeController::class, 'agenda'])->name('agenda');
 
-Route::get('contact',[HomeController::class,'Contact_Us'])->name('contact');
-Route::post('store-contact',[HomeController::class,'StoreContact'])->name('store-contact');
+Route::get('contact', [HomeController::class, 'Contact'])->name('contact');
+Route::post('contact', [HomeController::class, 'storeContact'])->name('store-contact');
+
+Route::get('/get-google-sheet-data', [HomeController::class, 'fetchData']);
+Route::get('/fetch-data', [HomeController::class, 'fetchData'])->name('fetch-data');
+
 
 
 Auth::routes();
@@ -153,12 +159,11 @@ Route::group([
 
             Route::resource('navbar', NavbarController::class);
             Route::post('get-navbars', [NavbarController::class, 'getNavbars'])->name('admin.getNavbars');
-//    Route::post('get-navbars', [NavbarController::class, 'navbarDetail'])->name('admin.getNavbars');
+//          Route::post('get-navbars', [NavbarController::class, 'navbarDetail'])->name('admin.getNavbars');
             Route::post('get-navbar-detail', [NavbarController::class, 'navbarDetail'])->name('admin.getNavbarDetail');
             Route::get('navbar/delete/{id}', [NavbarController::class, 'destroy'])->name('navbar-delete');
             Route::post('delete-selected-navbar', [NavbarController::class, 'deleteSelectedNavbar'])->name('delete-selected-navbar');
             Route::get('/navbars', [NavbarController::class, 'index'])->name('navbars');
-
 
             //Speaker Controller
             Route::get('/agenda2', [AgendaController::class, 'agenda']);
@@ -184,6 +189,19 @@ Route::group([
             Route::post('get-category-detail', [ActiveAbuDhabiController::class, 'categoryDetail'])
                 ->name('admin.getCategoryDetail');
 
+            //Blog Controller
+//            Route::get('/blog',['BlogController::class']);
+            Route::resource('blog',BlogController::class);
+            Route::post('get-blog',[BlogController::class,'getBlog'])->name('admin.getBlog');
+            Route::post('get-blog-detail', [BlogController::class, 'blogDetail'])
+                ->name('admin.getBlogDetail');
+
+            //CSVController
+            Route::resource('csv',controller: CsvController::class);
+//            Route::post('csv',[CsvController::class,'getCsv'])->name('admin.getCsv');
+            Route::post('get-csv-detail', [CsvController::class, 'cvsDetail'])
+                ->name('admin.getCsvDetail');
+
             //Product Controller
             Route::get('product',[ProductController::class]);
             Route::resource('product', ProductController::class);
@@ -202,7 +220,6 @@ Route::group([
             Route::resource('payment_gateway',PaymentGatewayController::class);
 //            Route::get('payment_gateway',PaymentGatewayController::class,);
             Route::Post('get-payment_gateway',[PaymentGatewayController::class,'getPaymentGateway'])->name('admin.PaymentGateway');
-
 
 
             // Active Abu Dhabi

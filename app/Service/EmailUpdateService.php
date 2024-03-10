@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class EmailUpdateService
 {
+
     public function updateEmail(Email $emailTemplate, array $data): bool
     {
-       if(!isset($data['title'],$data['subject'], $data['template_key'], $data['subject'], $data['email_content'], $data['recipient_emails']))
-       {
-           return false;
-       }
+        // Check if all required fields are present
+        if (!isset($data['title'], $data['template_key'], $data['subject'], $data['email_content'], $data['recipient_emails'])) {
+            return false;
+        }
 
         // Start a database transaction
         DB::beginTransaction();
@@ -23,11 +24,17 @@ class EmailUpdateService
             $emailTemplate->title = $data['title'];
             $emailTemplate->template_key = $data['template_key'];
             $emailTemplate->subject = $data['subject'];
-            $emailTemplate->email_content = $data['email_content'];
+
+            // Convert HTML to plain text and replace &nbsp; with spaces
+            $plainTextContent = str_replace('&nbsp;', ' ', strip_tags($data['email_content']));
+
+            // Store the modified plain text content
+            $emailTemplate->email_content = $plainTextContent;
+
             $emailTemplate->active = isset($data['active']) ? 1 : 0;
             $emailTemplate->save();
 
-//            // Clear existing recipients
+            // Clear existing recipients
             $emailTemplate->recipients()->detach();
 
             // Store the recipient emails
@@ -49,4 +56,5 @@ class EmailUpdateService
             return false;
         }
     }
+
 }

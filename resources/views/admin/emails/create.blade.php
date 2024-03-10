@@ -73,6 +73,7 @@
                                     @enderror
                                 </div>
 
+
                                 <div class="form-group">
                                     <label for="subject">Subject</label>
                                     <input type="text" name="subject"
@@ -84,15 +85,23 @@
                                     @enderror
                                 </div>
 
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="email_content">Email Content</label>--}}
+{{--                                    <textarea name="email_content" id="email_content"--}}
+{{--                                              class="form-control {{ $errors->has('email_content') ? 'is-invalid' : '' }}"--}}
+{{--                                              placeholder="Enter email content"></textarea>--}}
+{{--                                    @error('email_content')--}}
+{{--                                    <span id="email_content-error" class="error invalid-feedback">{{ $message }}</span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="email_content">Email Content</label>
-                                    <textarea name="email_content" id="email_content"
-                                              class="form-control {{ $errors->has('email_content') ? 'is-invalid' : '' }}"
-                                              placeholder="Enter email content"></textarea>
+                                    <textarea name="email_content" id="email_content" class="form-control summernote {{ $errors->has('email_content') ? 'is-invalid' : '' }}" placeholder="Enter email content"></textarea>
                                     @error('email_content')
                                     <span id="email_content-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
                                     <label for="admin_email">Admin Email</label>
                                     <input type="email" name="admin_email" class="form-control {{ $errors->has('admin_email') ? 'is-invalid' : '' }}" id="admin_email" placeholder="Enter admin email" value="{{ old('admin_email') }}">
@@ -126,6 +135,13 @@
             })
 
         })
+
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 300 // Adjust the height as needed
+            });
+        });
+
         // DropzoneJS Demo Code End
     </script>
 @endsection

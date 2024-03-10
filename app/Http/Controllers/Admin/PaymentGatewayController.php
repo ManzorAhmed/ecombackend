@@ -30,7 +30,6 @@ class PaymentGatewayController extends Controller
 
     public function store(PaymentstoreRequest $request)
     {
-        dd($request);
         try {
             $gatewayData = $request->validated();
             $this->paymentGatewayInterface->store($gatewayData);

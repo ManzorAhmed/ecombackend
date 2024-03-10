@@ -19,9 +19,10 @@
 @include('frontend.partials.header')
 
 <!-- Header Section Begin -->
-{{--@include('frontend.partials.slider')--}}
+@include('frontend.partials.slider')
+@include('frontend.partials.sponsor')
 {{--@include('frontend.partials.footer')--}}
-{{--<!-- Footer Section End -->--}}
+<!-- Footer Section End -->
 @include('frontend.partials.scripts')
 </body>
 

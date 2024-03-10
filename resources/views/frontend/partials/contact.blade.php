@@ -248,7 +248,7 @@
             @endif
         </div>
     </div>
-    <form class="form" action="{{ route('store-contact') }}" method="post">
+    <form class="form" action="{{ route('contact') }}" method="post">
         @csrf
 
         <div class="form-control">

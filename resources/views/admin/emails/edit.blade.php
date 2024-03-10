@@ -68,47 +68,33 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="to">Recipient Email(s)</label>
-                                    <input type="text" name="recipient_emails"
+                                    <label for="recipient_emails">Recipient Email(s)</label>
+                                    <input type="text" name="recipient_emails" id="recipient_emails"
                                            class="form-control {{ $errors->has('recipient_emails') ? 'is-invalid' : '' }}"
-                                           id="recipient_emails" placeholder="Update Recipient Email"
+                                           placeholder="Update Recipient Email"
                                            value="{{ old('recipient_emails', implode(',', $recipientEmails)) }}">
                                     @error('recipient_emails')
-                                    <span id="recipient_emails-error"
-                                          class="error invalid-feedback">{{ $message }}</span>
+                                    <span id="recipient_emails-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="to">To</label>
-                                    <input type="email" name="to"
-                                           class="form-control {{ $errors->has('to') ? 'is-invalid' : '' }}"
-                                           id="to" placeholder="Update recipient email" value="{{ old('to', $template->to) }}">
-                                    @error('to')
-                                    <span id="to-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
+
+                                {{--                                <div class="form-group">--}}
+{{--                                    <label for="to">To</label>--}}
+{{--                                    <input type="email" name="to"--}}
+{{--                                           class="form-control {{ $errors->has('to') ? 'is-invalid' : '' }}"--}}
+{{--                                           id="to" placeholder="Update recipient email" value="{{ old('to', $template->to) }}">--}}
+{{--                                    @error('to')--}}
+{{--                                    <span id="to-error" class="error invalid-feedback">{{ $message }}</span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="email_content">Email Content</label>
-                                    <textarea name="email_content" id="email_content"
-                                              class="form-control {{ $errors->has('email_content') ? 'is-invalid' : '' }}"
-                                              placeholder="Enter email content">{{ old('email_content', $template->email_content) }}</textarea>
+                                    <textarea name="email_content" id="email_content" class="form-control summernote {{ $errors->has('email_content') ? 'is-invalid' : '' }}" placeholder="Enter email content">{{ old('email_content', $template->email_content) }}</textarea>
                                     @error('email_content')
                                     <span id="email_content-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="email_content">Email Content</label>
-                                    <textarea name="email_content" id="email_content"
-                                              class="form-control ckeditor {{ $errors->has('email_content') ? 'is-invalid' : '' }}"
-                                              placeholder="Enter email content">{{ old('email_content', $template->email_content) }}</textarea>
-                                    @error('email_content')
-                                    <span id="email_content-error" class="error invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="contents">Contents</label>
-                                    <textarea name="text" class="summernote" id="contents" title="Contents"></textarea>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="admin_email">Admin Email</label>
                                     <input type="email" name="admin_email" class="form-control {{ $errors->has('admin_email') ? 'is-invalid' : '' }}" id="admin_email" placeholder="Enter admin email" value="{{ old('admin_email') }}">
@@ -168,6 +154,12 @@
             $('#recipient-emails').select2({
                 tags: true,
                 tokenSeparators: [',', ' ']
+            });
+        });
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 300 // Set the height of the editor
+                // You can add more configuration options here as needed
             });
         });
     </script>

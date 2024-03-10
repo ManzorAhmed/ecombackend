@@ -54,7 +54,8 @@
                                                     <input type="checkbox">
                                                     <label for="checkbox3"></label>
                                                 </div>
-                                            <th>Image</th>
+{{--                                            <th>Image</th>--}}
+                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Active</th>
                                             <th>Created at</th>
@@ -65,7 +66,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($category as $r)
+                                        @foreach($categories as $r)
                                             <tr>
                                                 <td>
                                                     <div class="checkbox checkbox-success m-0">
@@ -74,14 +75,13 @@
                                                         <label for="checkbox{{$r->id}}"></label>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    @if(File::exists('uploads/Faculty/'.$r->image))
-                                                        <img src="{{asset('uploads/Faculty/'.$r->image)}}" width="100" height="80" />
-                                                    @endif
-                                                </td>
+{{--                                                <td>--}}
+{{--                                                    @if(File::exists('uploads/Faculty/'.$r->image))--}}
+{{--                                                        <img src="{{asset('uploads/Faculty/'.$r->image)}}" width="100" height="80" />--}}
+{{--                                                    @endif--}}
+{{--                                                </td>--}}
+                                                <td>{{$r->id}}</td>
                                                 <td>{{$r->name}}</td>
-                                                <td>{{$r->title}}</td>
-                                                <td>{{$r->country}}</td>
                                                 <td>
                                                     @if($r->active)
                                                         <span class="btn btn-sm btn-success">Active</span>

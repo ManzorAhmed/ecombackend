@@ -15,11 +15,11 @@ class UsersController extends Controller
 {
     private $obj;
 
-    public function __construct(User $object)
-    {
-        // $this->middleware('auth:admin');
-        $this->obj = $object;
-    }
+//    public function __construct(User $object)
+//    {
+//        // $this->middleware('auth:admin');
+//        $this->obj = $object;
+//    }
 
     /**
      * Display a listing of the resource.
@@ -31,6 +31,11 @@ class UsersController extends Controller
     {
 
         return view('admin.users.index');
+    }
+    public function alluser()
+    {
+        $users = User::all();
+        return response()->json(['users' => $users], 200);
     }
 
     public function getUsers(Request $request)
